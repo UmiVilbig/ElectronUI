@@ -38,6 +38,11 @@ ipcMain.on('close', () => {
   focusedWindow?.close();
 })
 
+ipcMain.on('minimize', () => {
+  const focusedWindow = window.getFocusedWindow();
+  focusedWindow?.minimize();
+})
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();

@@ -4,6 +4,7 @@ declare global {
       ipcRenderer: {
         myPing(): void;
         close(): void;
+        minimize(): void;
       };
     };
   }
