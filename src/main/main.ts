@@ -15,6 +15,8 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
+const window = require('electron').BrowserWindow;
+
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -30,6 +32,11 @@ ipcMain.on('ipc-example', async (event, arg) => {
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
 });
+
+ipcMain.on('close', () => {
+  const focusedWindow = window.getFocusedWindow();
+  focusedWindow?.close();
+})
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -71,8 +78,10 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1280,
+    height: 720,
+    minWidth: 1080,
+    minHeight: 600,
     icon: getAssetPath('icon.png'),
     transparent: true,
     frame: false,

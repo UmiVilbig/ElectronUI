@@ -38,3 +38,10 @@ a:hover {
   background-color: red;
   border-radius: 10px;
 }
+
+.drag {
+  -webkit-app-region: drag;
+}
+.noDrag {
+  -webkit-app-region: no-drag;
+}
