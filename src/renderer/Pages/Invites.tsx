@@ -3,13 +3,16 @@ import '../App.css'
 import Navbar from 'renderer/Utils/Navbar';
 import Topbar from 'renderer/Utils/Topbar';
 
-function Dashboard() {
+function Task() {
     return (
         <div className='main'>
-            <Navbar/>
+            <Navbar currentPage="profile"/>
+        <div style={{display: 'block'}}>
             <Topbar/>
+            <h1 style={{marginLeft: '1vw'}}>Profiles</h1>
+        </div>
         </div>
     );
 }
 
-export default Dashboard;
+export default Task;
