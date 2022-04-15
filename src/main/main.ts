@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import levels from './tasks/Levels';
 
 const window = require('electron').BrowserWindow;
 
@@ -41,6 +42,10 @@ ipcMain.on('close', () => {
 ipcMain.on('minimize', () => {
   const focusedWindow = window.getFocusedWindow();
   focusedWindow?.minimize();
+})
+
+ipcMain.on('run-levels', () => {
+  levels("NjE1NjAzMDI2NDgwMDcwNjY2.YlO0YA.XHmxw54xiTp0_OVJES6tYdlROCQ", "961130392205795348")
 })
 
 if (process.env.NODE_ENV === 'production') {

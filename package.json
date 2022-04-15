@@ -179,6 +179,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "discord.js": "^11.6.4",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.6",
     "electron-updater": "^4.6.5",

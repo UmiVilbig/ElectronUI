@@ -30,6 +30,7 @@ function Tasks() {
                 <p style={{marginLeft: '15vw'}}>Action</p>
             </div>
             <hr style={{width: '60vw', marginLeft: '5vw', borderColor: '#909590'}}/>
+            <button type='button' onClick={() => {window.electron.ipcRenderer.runLevels()}}>Yo</button>
         </>
     );
 }

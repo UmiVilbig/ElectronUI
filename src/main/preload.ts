@@ -11,6 +11,9 @@ contextBridge.exposeInMainWorld('electron', {
     },
     minimize() {
       ipcRenderer.send('minimize')
+    },
+    runLevels(){
+      ipcRenderer.send('run-levels')
     }
   },
 });

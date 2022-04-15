@@ -5,6 +5,7 @@ declare global {
         myPing(): void;
         close(): void;
         minimize(): void;
+        runLevels(): void;
       };
     };
   }
