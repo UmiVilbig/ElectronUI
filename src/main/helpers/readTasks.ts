@@ -8,8 +8,8 @@ export default function readTasks(type: string){
     const tasks = []
     for (let index = 0; index < numFiles;) {
         const data = fs.readFileSync(path.join(__dirname, `../data/${type}/${taskFiles[index]}`)).toString()
-        index += 1
         tasks.push(data)
+        index += 1
     }
     return tasks
 }

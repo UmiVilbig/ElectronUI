@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable array-callback-return */
-import { FaPlus, FaPlay, FaStop, FaTrash } from 'react-icons/fa'
+import { FaPlus, FaPlay, FaStop, FaTrash, FaEdit } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import '../Styles/Levels.css'
 
@@ -24,6 +24,10 @@ function Tasks() {
             setPopup('none')
         }
     })
+
+    function startHandle(taskName: string) {
+        window.electron.ipcRenderer.startLevel(taskName)
+    }
 
     function clearForm() {
         (document.getElementById('name') as HTMLInputElement).value = '';
@@ -64,7 +68,7 @@ function Tasks() {
                     <FaPlus style={{width: '2.5vw', height: '2.5vh', color: '#9AE19D'}}/>
                     <p style={{fontSize: '1.3vmax', color: 'white'}}>Create Task</p>
                 </button>
-                <button type='button' style={{display: 'flex', marginLeft: '7vw'}}>
+                <button type='button' style={{display: 'flex', marginLeft: '7vw'}} onClick={() => {window.electron.ipcRenderer.runLevels()}}>
                     <FaPlay style={{width: '2.5vw', height: '2.5vh', color: '#9AE19D'}}/>
                     <p style={{fontSize: '1.3vmax', color: 'white'}}>Start All</p>
                 </button>
@@ -78,12 +82,25 @@ function Tasks() {
                 </button>
             </div>
             <div style={{display: 'flex', marginLeft: '5vw', marginTop: '5vh', color: '#909590'}}>
-                <p>Account</p>
-                <p style={{marginLeft: '30vw'}}>Status</p>
-                <p style={{marginLeft: '15vw'}}>Action</p>
+                <p>Name</p>
+                <p style={{position: 'absolute', marginLeft: '34vw'}}>Status</p>
+                <p style={{position: 'absolute', marginLeft: '53vw'}}>Action</p>
             </div>
             <hr style={{width: '60vw', marginLeft: '5vw', borderColor: '#909590'}}/>
-            <button type='button' onClick={() => {window.electron.ipcRenderer.runLevels()}}>Yo</button>
+            {Object.keys(tasks).length > 0? JSON.parse(tasks).map((taskArray: string) => {
+                const mappingItem = JSON.parse(taskArray)
+                return(
+                <div style={{display: 'flex', position: 'relative', marginTop: '10px'}}>
+                    <p style={{marginLeft: '5vw'}}>{mappingItem.name}</p>
+                    <p style={{position: 'absolute', marginLeft: '38.5vw'}}>Stopped</p>
+                    <p style={{position: 'absolute', marginLeft: '57vw'}}>
+                        <FaPlay style={{marginLeft: '1w', color: '#9AE19D'}} onClick={() => startHandle(mappingItem.name)}/>
+                        <FaStop style={{marginLeft: '1vw', color: '#9AE19D'}}/>
+                        <FaEdit size="19px" style={{marginLeft: '1vw', color: '#9AE19D'}}/>
+                    </p>
+                </div>
+                )
+            }): <></>}
             <div className='modal' style={{display: popup}}>
                 <div className='modal-content'>                    
                     <h1 style={{textAlign: 'center'}}>Create Task</h1>
@@ -101,15 +118,6 @@ function Tasks() {
                     <h3 style={{display: notFilled, color: '#537A5A', fontWeight: 'bolder'}}>Please fill in all fields</h3>
                 </div>
             </div>
-            {Object.keys(tasks).length > 0? JSON.parse(tasks).map((taskArray: string) => {
-                const yo = JSON.parse(taskArray)
-                return(
-                // <h1>{taskArray}</h1>
-                <div style={{display: 'flex'}}>
-                    <p>{yo.name}</p>
-                </div>
-                )
-            }): <></>}
         </>
     );
 }

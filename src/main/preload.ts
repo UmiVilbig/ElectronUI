@@ -26,6 +26,9 @@ contextBridge.exposeInMainWorld('electron', {
       if(validChannels.includes(channel)){
         ipcRenderer.once(channel, (_event, ...args) => func(...args))
       }
+    },
+    startLevel(taskName: string){
+      ipcRenderer.send('start-level', taskName)
     }
   },
 });

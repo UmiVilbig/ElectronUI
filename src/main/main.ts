@@ -49,7 +49,7 @@ ipcMain.on('minimize', () => {
 })
 
 ipcMain.on('run-levels', () => {
-  levels("NjE1NjAzMDI2NDgwMDcwNjY2.YlO0YA.XHmxw54xiTp0_OVJES6tYdlROCQ", "961130392205795348")
+  //levels("NjE1NjAzMDI2NDgwMDcwNjY2.YlO0YA.XHmxw54xiTp0_OVJES6tYdlROCQ", "961130392205795348")
 })
 
 ipcMain.on('create-task', (event, payload, fileName) => {
@@ -59,6 +59,11 @@ ipcMain.on('create-task', (event, payload, fileName) => {
 ipcMain.on('get-tasks', (event, type: string) => {
   const tasks = readTasks(type)
   event.reply('get-tasks', tasks)
+})
+
+ipcMain.on('start-level', (event, taskName) => {
+  console.log(taskName)
+  levels(taskName)
 })
 
 if (process.env.NODE_ENV === 'production') {

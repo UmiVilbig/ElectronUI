@@ -1,13 +1,16 @@
 /* eslint-disable prettier/prettier */
-const Discord = require("discord.js")
+import Discord, { Message } from "discord.js"
+import fs from 'fs'
+import path from 'path'
 
-export default function levels(token: string, channelId: string){
+export default function levels(taskName: string){
+    const task = JSON.parse(fs.readFileSync(path.join(__dirname, `../data/levels/${taskName}.json`)).toString())
     const client = new Discord.Client()
     client.on('ready', () => {
         console.log(`Logged in as ${client.user.tag}!`)
-        client.channels.get(channelId).send('from electron')
+        client.channels.get(task.id)?.send('from electron')
         client.destroy()
     })
     
-    client.login(token)
+    client.login(task.token)
 }
