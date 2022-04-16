@@ -1,5 +1,5 @@
-/* eslint-disable array-callback-return */
 /* eslint-disable prettier/prettier */
+/* eslint-disable array-callback-return */
 import { FaPlus, FaPlay, FaStop, FaTrash } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import '../Styles/Levels.css'

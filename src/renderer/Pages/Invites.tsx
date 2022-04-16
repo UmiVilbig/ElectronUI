@@ -9,7 +9,7 @@ function Task() {
             <Navbar currentPage="profile"/>
         <div style={{display: 'block'}}>
             <Topbar/>
-            <h1 style={{marginLeft: '1vw'}}>Profiles</h1>
+            <h1 style={{marginLeft: '1vw'}}>Invites</h1>
         </div>
         </div>
     );
