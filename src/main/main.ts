@@ -14,7 +14,11 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+
+import readTasks from './helpers/readTasks';
+import saveTask from './helpers/createTask';
 import levels from './tasks/Levels';
+
 
 const window = require('electron').BrowserWindow;
 
@@ -46,6 +50,15 @@ ipcMain.on('minimize', () => {
 
 ipcMain.on('run-levels', () => {
   levels("NjE1NjAzMDI2NDgwMDcwNjY2.YlO0YA.XHmxw54xiTp0_OVJES6tYdlROCQ", "961130392205795348")
+})
+
+ipcMain.on('create-task', (event, payload, fileName) => {
+  saveTask(payload, fileName)
+})
+
+ipcMain.on('get-tasks', (event, type: string) => {
+  const tasks = readTasks(type)
+  event.reply('get-tasks', tasks)
 })
 
 if (process.env.NODE_ENV === 'production') {

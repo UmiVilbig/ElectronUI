@@ -14,6 +14,19 @@ contextBridge.exposeInMainWorld('electron', {
     },
     runLevels(){
       ipcRenderer.send('run-levels')
+    },
+    createTask(payload: object, fileName: string){
+      ipcRenderer.send('create-task', payload, fileName)
+    },
+    getTasks(type: string){
+      ipcRenderer.send('get-tasks', type)
+    },
+    replyTasks(channel: string, func: (...args: unknown[]) => void){
+      const validChannels = ['get-tasks']
+      if(validChannels.includes(channel)){
+        ipcRenderer.once(channel, (_event, ...args) => func(...args))
+      }
     }
   },
 });
+

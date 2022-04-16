@@ -6,6 +6,9 @@ declare global {
         close(): void;
         minimize(): void;
         runLevels(): void;
+        createTask(payload: object, fileName: string): void;
+        getTasks(type: string): void;
+        replyTasks(channel: string, func: (...args: unknown[]) => void): void;
       };
     };
   }
