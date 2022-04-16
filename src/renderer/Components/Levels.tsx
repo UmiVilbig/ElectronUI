@@ -8,14 +8,14 @@ function Tasks() {
 
     const [popup, setPopup] = useState('none')
     const [notFilled, setnotFilled] = useState('none')
-    const [tasks, setTasks] = useState([])
+    const [tasks, setTasks] = useState('')
 
     useEffect(() => {
         window.electron.ipcRenderer.getTasks('levels')
     },[])
 
     window.electron.ipcRenderer.replyTasks('get-tasks', (args) => {
-        setTasks(args)
+        setTasks(JSON.stringify(args))
     })
     
     window.addEventListener("click", (event) => {
@@ -52,7 +52,7 @@ function Tasks() {
             clearForm()
             setTimeout(() => {
                 window.electron.ipcRenderer.getTasks('levels')
-            }, 500)
+            }, 300)
         }
     }
     return (
@@ -101,9 +101,13 @@ function Tasks() {
                     <h3 style={{display: notFilled, color: '#537A5A', fontWeight: 'bolder'}}>Please fill in all fields</h3>
                 </div>
             </div>
-            {Object.keys(tasks).length > 0? tasks.map((taskArray) => {
+            {Object.keys(tasks).length > 0? JSON.parse(tasks).map((taskArray: string) => {
+                const yo = JSON.parse(taskArray)
                 return(
-                <h1>{taskArray}</h1>
+                // <h1>{taskArray}</h1>
+                <div style={{display: 'flex'}}>
+                    <p>{yo.name}</p>
+                </div>
                 )
             }): <></>}
         </>
