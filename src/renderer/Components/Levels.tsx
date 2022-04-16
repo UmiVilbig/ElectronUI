@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable prettier/prettier */
 import { FaPlus, FaPlay, FaStop, FaTrash } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
@@ -7,13 +8,14 @@ function Tasks() {
 
     const [popup, setPopup] = useState('none')
     const [notFilled, setnotFilled] = useState('none')
+    const [tasks, setTasks] = useState([])
 
     useEffect(() => {
         window.electron.ipcRenderer.getTasks('levels')
     },[])
 
     window.electron.ipcRenderer.replyTasks('get-tasks', (args) => {
-        console.log(args)
+        setTasks(args)
     })
     
     window.addEventListener("click", (event) => {
@@ -35,7 +37,6 @@ function Tasks() {
         const token = (document.getElementById('discordToken') as HTMLInputElement).value
         const id = (document.getElementById('channelID') as HTMLInputElement).value
         const delay = (document.getElementById('delay') as HTMLInputElement).value
-        console.log(typeof(name))
         const payload = {
             "name": name,
             "token": token,
@@ -49,6 +50,9 @@ function Tasks() {
             window.electron.ipcRenderer.createTask(payload, name)
             setPopup('none')
             clearForm()
+            setTimeout(() => {
+                window.electron.ipcRenderer.getTasks('levels')
+            }, 500)
         }
     }
     return (
@@ -97,6 +101,11 @@ function Tasks() {
                     <h3 style={{display: notFilled, color: '#537A5A', fontWeight: 'bolder'}}>Please fill in all fields</h3>
                 </div>
             </div>
+            {Object.keys(tasks).length > 0? tasks.map((taskArray) => {
+                return(
+                <h1>{taskArray}</h1>
+                )
+            }): <></>}
         </>
     );
 }
